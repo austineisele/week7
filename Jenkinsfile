@@ -37,7 +37,7 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git branch: 'main', credentialId, 'newSpring23', url: 'https://github.com/austineisele/week7.git' 
+      git branch: 'main', credentialsId: 'newSpring23', url: 'https://github.com/austineisele/week7.git' 
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
