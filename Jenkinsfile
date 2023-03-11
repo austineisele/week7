@@ -1,4 +1,8 @@
-podTemplate(yaml: '''
+pipeline{
+  agent {
+    kubernetes {
+      defaultContainer 'kaniko'
+        yaml '''
     apiVersion: v1
     kind: Pod
     spec:
@@ -34,34 +38,32 @@ podTemplate(yaml: '''
             items:
             - key: .dockerconfigjson
               path: config.json
-''') {
-  node(POD_LABEL) {
-    stage('Build a gradle project') {
-      git branch: 'main', credentialsId: 'newSpring23', url: 'https://github.com/austineisele/week7.git' 
-      container('gradle') {
-        stage('Build a gradle project') {
-          sh '''
-          chmod +x gradlew
-          ./gradlew build
-          mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
-          '''
+        '''
+    }
+  }
+  triggers{
+    pollSCM('*****')
+  }
+  stages {
+    stage("Build the gradle project"){
+      steps {
+        sh "pwd"
+        sh "chmod +x gradlew"
+        sh "./gradlew build" 
+        sh "mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt"
         }
+    }
+    post {
+      success{
+       sh "echo 'FROM openjdk:8-jre' > Dockerfile" 
+       sh "echo 'COPY ./calculator-0.01-SNAPSHOT.jar app.jar' >> Dockerfile"
+       sh "echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile"
+       sh "mv /mnt/calculator-0.0.1-SNAPSHOT.jar . /kaniko/executor --context 'pwd' --destination acoltrane/calculator-kankio:1.0"
       }
     }
-
-    stage('Build Java Image') {
-      container('kaniko') {
-        stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination acoltrane/hello-kaniko:1.0
-          '''
-        }
-      }
-    }
-
   }
 }
+
+
+
+
