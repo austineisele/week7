@@ -37,8 +37,8 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git https://github.com/austineisele/week7.git' 
-      container('gradle') {
+            container('gradle') {
+            git https://github.com/austineisele/week7.git' 
         stage('Build a gradle project') {
           sh '''
           pwd
