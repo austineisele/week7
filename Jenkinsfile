@@ -70,7 +70,7 @@ podTemplate(yaml: '''
                     '''
                     containerName = "calculator-feature-kaniko:0.1"
                 }
-              catch (exception e){
+              catch (Exception e){
                   testPassed = false
                   echo 'Error: ' + e.toString()
               }
