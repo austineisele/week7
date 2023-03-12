@@ -51,9 +51,8 @@ podTemplate(yaml: '''
           testPassed = true
           containerName = "" 
           stage ("build and test"){
-            switch (env.BRANCH_NAME){
-              case {env.BRANCH_NAME == 'feature'}:
-               echo "running tests on the feature branch"
+            if(env.BRANCH_NAME == 'feature'){
+                echo "running tests on the feature branch"
                 try{
                   sh '''
                     pwd
@@ -66,9 +65,9 @@ podTemplate(yaml: '''
               catch (Exception e){
                   testPassed = false
                   echo 'Error: ' + e.toString()
-              } 
-              case {env.BRANCH_NAME == 'main'}:
-                echo "running tests on the main branch"
+                }
+              else if(env.BRANCH_NAME == 'main'){
+                    echo "running tests on the main branch"
                 try{
                   sh '''
                     pwd
@@ -83,14 +82,13 @@ podTemplate(yaml: '''
               catch (Exception e){
                 testPassed = false
                 echo 'Error: ' + e.toString() 
-              }
-              default:
-                echo "This is the playground branch. No tests have been run"
+                }
+              else{
+                 echo "This is the playground branch. No tests have been run"
                 testPassed = false
+              }
             }
         }
-    }
-
     stage('Build Java Image') {
       container('kaniko') {
         stage('Build a gradle project') {
