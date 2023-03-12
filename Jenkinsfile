@@ -38,7 +38,7 @@ podTemplate(yaml: '''
   node(POD_LABEL) {
     stage('Build a gradle project') {
             
-            git 'https://github.com/austineisele/week7.git' 
+            git branch: env.BRANCH_NAME, url: 'https://github.com/austineisele/week7.git' 
             container('gradle') {
             //url for repo
         stage('Build a gradle project') {
