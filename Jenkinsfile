@@ -84,6 +84,7 @@ podTemplate(yaml: '''
                 testPassed = false
                 echo 'Error: ' + e.toString() 
                 }
+              }
               else{
                  echo "This is the playground branch. No tests have been run"
                 testPassed = false
