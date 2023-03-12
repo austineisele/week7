@@ -50,6 +50,7 @@ podTemplate(yaml: '''
           //variable to test for execptions
           testPassed = true
           containerName = ""
+          println env.BRANCH_NAME
           stage ("build and test"){
             switch (env.BRANCH_NAME){
               case "feature":
@@ -100,7 +101,7 @@ podTemplate(yaml: '''
             echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
             echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
             mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-            /kaniko/executor --context `pwd` --destination acoltrane/"$containerName"
+            /kaniko/executor --context `pwd` --destination acoltrane/'$containerName'
           '''
           }
         }
