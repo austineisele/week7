@@ -60,7 +60,7 @@ podTemplate(yaml: '''
                     ./gradlew test
                     ./gradlew jacocoTestReport
                     '''
-                    containerName = "calculator-feature-kaniko:0.1"
+                    containerName = "calculator-feature:0.1"
                 }
               catch (Exception e){
                   testPassed = false
@@ -78,7 +78,7 @@ podTemplate(yaml: '''
                     ./gradlew jacocoTestCoverageVerification
                     ./gradlew jacocoTestReport
                     '''
-                    containerName = "calculator-kaniko:1.0"
+                    containerName = "calculator:1.0"
                 }
               catch (Exception e){
                 testPassed = false
