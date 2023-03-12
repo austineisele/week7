@@ -66,6 +66,7 @@ podTemplate(yaml: '''
                   testPassed = false
                   echo 'Error: ' + e.toString()
                 }
+              }
               else if(env.BRANCH_NAME == 'main'){
                     echo "running tests on the main branch"
                 try{
