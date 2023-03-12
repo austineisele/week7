@@ -49,11 +49,10 @@ podTemplate(yaml: '''
           '''
           //variable to test for execptions
           testPassed = true
-          containerName = ""
-          println env.BRANCH_NAME
+          containerName = "" 
           stage ("build and test"){
             switch (env.BRANCH_NAME){
-              case "feature":
+              case 'feature':
                echo "running tests on the feature branch"
                 try{
                   sh '''
@@ -68,7 +67,7 @@ podTemplate(yaml: '''
                   testPassed = false
                   echo 'Error: ' + e.toString()
               } 
-              case "main":
+              case 'main':
                 echo "running tests on the main branch"
                 try{
                   sh '''
@@ -97,12 +96,13 @@ podTemplate(yaml: '''
         stage('Build a gradle project') {
           if(testPassed == true){
           sh '''
+            container='''+containerName'''
             echo 'FROM openjdk:8-jre' > Dockerfile
             echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
             echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
             mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-            /kaniko/executor --context `pwd` --destination acoltrane/'$containerName'
-          '''
+            /kaniko/executor --context `pwd` --destination acoltrane/$container
+            '''
           }
         }
       }
