@@ -75,8 +75,8 @@ podTemplate(yaml: '''
                     ./gradlew checkstyleMain
                     ./gradlew test
                     ./gradlew jacocoTestReport
-                    ./jacocoTestCoverageVerification
-                    ./jacocoTestReport
+                    ./gradlew jacocoTestCoverageVerification
+                    ./gradlew jacocoTestReport
                     '''
                     containerName = "calculator-kaniko:1.0"
                 }
