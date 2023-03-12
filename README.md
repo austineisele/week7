@@ -17,3 +17,5 @@ Another restart
 Fixed the string interpolation. 
 
 Now testing main branch.
+
+Can't pull main branch? Updated webhook for pushes as well. 
