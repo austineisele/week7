@@ -68,8 +68,8 @@ podTemplate(yaml: '''
                   echo 'Error: ' + e.toString()
                 }
               }
-              else if(env.BRANCH_NAME == 'main'){
-                    echo "running tests on the main branch"
+              else if(env.BRANCH_NAME == 'master'){
+                    echo "running tests on the master branch"
                 try{
                   sh '''
                     pwd
