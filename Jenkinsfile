@@ -37,12 +37,12 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-            //repo for branch
-            git branch: env.BRANCH_NAME, url: 'https://github.com/austineisele/week7.git' 
             container('gradle') {
+            git 'https://github.com/austineisele/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
         stage('Build a gradle project') {
           sh '''
           pwd
+          cd Chapter08/sample1
           chmod +x gradlew
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
@@ -56,6 +56,7 @@ podTemplate(yaml: '''
                 try{
                   sh '''
                     pwd
+                    cd Chapter08/sample1
                     ./gradlew checkstyleMain
                     ./gradlew test
                     ./gradlew jacocoTestReport
@@ -72,6 +73,7 @@ podTemplate(yaml: '''
                 try{
                   sh '''
                     pwd
+                    cd Chapter08/sample1
                     ./gradlew checkstyleMain
                     ./gradlew test
                     ./gradlew jacocoTestReport
