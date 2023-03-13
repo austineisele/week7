@@ -21,3 +21,5 @@ Now testing main branch.
 Can't pull main branch? Updated webhook for pushes as well. 
 
 Now testing the playground branch
+
+Playground branch isn't building with a PR
